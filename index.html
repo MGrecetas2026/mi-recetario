@@ -5,31 +5,136 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mi recetario</title>
 <style>
+* { box-sizing: border-box; }
 body {
   font-family: Arial, sans-serif;
-  max-width: 700px;
-  margin: 30px auto;
+  max-width: 900px;
+  margin: auto;
   padding: 20px;
-  background: #faf7f0;
+  background: #f8f5ee;
   color: #333;
 }
-h1 { color: #795333; }
-a {
-  display: block;
-  padding: 16px;
-  margin: 12px 0;
-  background: white;
-  border-radius: 8px;
+header {
+  text-align: center;
+  padding: 25px 10px;
+}
+h1 {
   color: #795333;
+  font-size: 2.2em;
+  margin-bottom: 8px;
+}
+header p { color: #6b6258; }
+h2 {
+  color: #795333;
+  margin-top: 30px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+.card {
+  display: block;
+  padding: 22px 18px;
+  background: white;
+  border: 1px solid #e5ddd0;
+  border-radius: 12px;
   text-decoration: none;
-  border: 1px solid #ddd;
+  color: #795333;
+  box-shadow: 0 2px 5px #0000000a;
+}
+.card strong {
+  display: block;
+  font-size: 1.1em;
+  margin-bottom: 7px;
+}
+.card span {
+  color: #6b6258;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+.card:hover {
+  border-color: #b18a60;
+  background: #fffdf9;
+}
+footer {
+  text-align: center;
+  margin-top: 35px;
+  color: #81776b;
+  font-size: 0.85em;
 }
 </style>
 </head>
 <body>
-<h1>🍳 Mi recetario</h1>
-<p>Mis recetas de cocina, organizadas para consultar desde el móvil o el ordenador.</p>
-<h2>🥩 Carnes</h2>
-<a href="Recetario_Prueba_V2_Carrilleras.html">Carrilleras de ternera</a>
+
+<header>
+  <h1>🍳 Mi recetario</h1>
+  <p>Mi colección personal de recetas y técnicas de cocina</p>
+</header>
+
+<h2>📚 Categorías</h2>
+
+<div class="grid">
+
+  <a class="card" href="#carnes">
+    <strong>🥩 Carnes</strong>
+    <span>Carrilleras, milanesas, asados y más.</span>
+  </a>
+
+  <a class="card" href="#pescados">
+    <strong>🐟 Pescados y mariscos</strong>
+    <span>Bonito, gambones, tartares y otras elaboraciones.</span>
+  </a>
+
+  <a class="card" href="#arroces">
+    <strong>🍚 Arroces y pasta</strong>
+    <span>Arroces, risottos, pastas y cereales.</span>
+  </a>
+
+  <a class="card" href="#verduras">
+    <strong>🥬 Verduras y guarniciones</strong>
+    <span>Verduras, acompañamientos y guarniciones.</span>
+  </a>
+
+  <a class="card" href="#salsas">
+    <strong>🥣 Salsas y emulsiones</strong>
+    <span>Pestos, pilpil, emulsiones y salsas.</span>
+  </a>
+
+  <a class="card" href="#entrantes">
+    <strong>🍤 Entrantes y aperitivos</strong>
+    <span>Tapas, bocados y pequeños platos.</span>
+  </a>
+
+  <a class="card" href="#postres">
+    <strong>🍰 Postres</strong>
+    <span>Repostería y elaboraciones dulces.</span>
+  </a>
+
+  <a class="card" href="#baja-temperatura">
+    <strong>🌡️ Baja temperatura</strong>
+    <span>Carnes, pescados y verduras cocinados a baja temperatura.</span>
+  </a>
+
+  <a class="card" href="#tecnicas">
+    <strong>📖 Técnicas de cocina</strong>
+    <span>Sous-vide, curados, regeneración y métodos de cocina.</span>
+  </a>
+
+</div>
+
+<h2>⭐ Mi receta</h2>
+
+<div class="grid">
+  <a class="card" href="Recetario_Prueba_V2_Carrilleras.html">
+    <strong>🥩 Carrilleras de ternera</strong>
+    <span>Abrir la receta interactiva y ajustar las cantidades al número de comensales.</span>
+  </a>
+</div>
+
+<footer>
+  Mi recetario personal · Una colección que crece plato a plato
+</footer>
+
 </body>
 </html>
