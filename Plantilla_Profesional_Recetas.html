@@ -134,6 +134,7 @@ button:hover {
 .unit {
   min-width: 90px;
   color: var(--secundario);
+  white-space: nowrap;
   font-size: 14px;
 }
 
@@ -180,9 +181,13 @@ a {
   }
 
   .ingredient {
-    grid-template-columns: 28px minmax(0, 1fr) auto;
-    gap: 8px;
-  }
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee9e2;
+}
 
   .unit {
     grid-column: 2;
@@ -192,10 +197,14 @@ a {
     font-size: 13px;
   }
 
-  .qty {
-    grid-column: 3;
-    grid-row: 1 / 3;
-  }
+ .qty {
+  min-width: 0;
+  color: var(--acento-oscuro);
+  font-weight: bold;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
 }
 
 @media print {
