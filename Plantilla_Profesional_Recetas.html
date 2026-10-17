@@ -234,6 +234,21 @@ a {
     break-inside: avoid;
   }
 }
+  /* Tamaño de la fotografía de cabecera */
+.recipe-hero img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Fotografía más compacta en móviles */
+@media (max-width: 600px) {
+  .recipe-hero img {
+    height: 130px;
+  }
+}
 </style>
 </head>
 <body>
