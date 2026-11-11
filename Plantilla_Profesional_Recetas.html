@@ -369,6 +369,15 @@ ta.addEventListener('focus',keepVisible);
 ta.addEventListener('click',keepVisible);
 update();
 })();
+  // Guardar automáticamente la elaboración
+const campoElaboracion = document.getElementById("elaboracion");
+const claveElaboracion = "elaboracion-" + window.location.pathname;
+
+campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
+
+campoElaboracion.addEventListener("input", function() {
+  localStorage.setItem(claveElaboracion, campoElaboracion.value);
+});
 </script>
 </body>
 </html>
