@@ -377,7 +377,19 @@ campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
 
 campoElaboracion.addEventListener("input", function() {
   localStorage.setItem(claveElaboracion, campoElaboracion.value);
-});
+});// Guardar automáticamente la elaboración
+document.addEventListener("DOMContentLoaded", function() {
+  var campoElaboracion = document.getElementById("elaboration");
+  var claveElaboracion = "elaboration-" + window.location.pathname;
+
+  if (!campoElaboracion) return;
+
+  campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
+
+  campoElaboracion.addEventListener("input", function() {
+    localStorage.setItem(claveElaboracion, campoElaboracion.value);
+    });
+  });
 </script>
 </body>
 </html>
