@@ -1,0 +1,395 @@
+<!doctype html> 
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plantilla profesional de recetas</title>
+  <style>
+  /* Botón flotante de retorno al recetario */
+.back-to-recipes {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  display: inline-block;
+  padding: 12px 18px;
+  background: #795333;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.20);
+  transition: background 0.2s ease;
+}
+
+.back-to-recipes:hover {
+  background: #5e3e25;
+}
+
+@media (max-width: 600px) {
+  .back-to-recipes {
+    right: 12px;
+    bottom: 12px;
+    padding: 11px 15px;
+    font-size: 14px;
+  }
+}
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --fondo: #f3efe8;
+  --papel: #ffffff;
+  --texto: #292820;
+  --secundario: #706b61;
+  --acento: #a56843;
+  --acento-oscuro: #795034;
+  --borde: #e8e0d6;
+  --suave: #f8f5f0;
+}
+
+body {
+  margin: 0;
+  padding: 24px 14px;
+  font-family: Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.65;
+}
+
+.card {
+  max-width: 850px;
+  margin: auto;
+  padding: 28px;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(50, 38, 25, 0.07);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 30px 0 14px;
+  padding-bottom: 9px;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-weight: normal;
+  border-bottom: 2px solid var(--borde);
+}
+
+.subtitle {
+  margin-bottom: 22px;
+  color: var(--secundario);
+  font-size: 15px;
+}
+
+.people {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--suave);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--acento-oscuro);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--acento);
+}
+
+#diners {
+  min-width: 30px;
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.ingredient {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee9e2;
+}
+
+.ingredient input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--acento-oscuro);
+  cursor: pointer;
+}
+
+.ingredient:has(input:checked) {
+  color: #89847b;
+}
+
+.ingredient:has(input:checked) > :nth-child(2) {
+  text-decoration: line-through;
+}
+
+.qty {
+  min-width: 48px;
+  color: var(--acento-oscuro);
+  font-weight: bold;
+  text-align: right;
+}
+
+.unit {
+  min-width: 90px;
+  color: var(--secundario);
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 230px;
+  resize: vertical;
+  padding: 16px;
+  border: 1px solid #d8cfc3;
+  border-radius: 12px;
+  background: #fffdfb;
+  color: var(--texto);
+  font: inherit;
+  line-height: 1.75;
+}
+
+.hint {
+  margin-top: 9px;
+  color: var(--secundario);
+  font-size: 13px;
+}
+
+a {
+  color: var(--acento-oscuro);
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 12px 8px;
+    padding-bottom: 35vh;
+  }
+
+  .card {
+    padding: 18px 15px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  .ingredient {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  gap: 5px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee9e2;
+}
+
+  .unit {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    margin-top: -8px;
+    font-size: 13px;
+  }
+
+ .qty {
+  min-width: 0;
+  color: var(--acento-oscuro);
+  font-weight: bold;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: white;
+    color: black;
+  }
+
+  .card {
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  button,
+  .hint {
+    display: none !important;
+  }
+
+  textarea {
+    min-height: 0;
+    resize: none;
+    padding: 0;
+    border: 0;
+    background: white;
+  }
+
+  h2 {
+    break-after: avoid;
+  }
+
+  .ingredient {
+    break-inside: avoid;
+  }
+}
+  /* Tamaño de la fotografía de cabecera */
+.recipe-hero img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Fotografía más compacta en móviles */
+@media (max-width: 600px) {
+  .recipe-hero img {
+    height: 130px;
+  }
+}
+</style>
+</head>
+<body>
+ <div style="max-width:700px; margin:0 auto 20px; padding:0 12px;">
+  <a href="index.html" class="back-to-recipes">
+  ← Volver al recetario
+  </a>
+</div>
+<div class="card">
+
+  <div class="recipe-hero">
+    <img
+      src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=85"
+      alt="Plato de comida presentado para servir"
+    >
+    <span class="hero-label">RECETARIO · COCINA CASERA</span>
+  </div>
+
+  <header class="recipe-header">
+    <p class="recipe-category">CATEGORÍA · TÉCNICA DE COCINA</p>
+    <h1>Nombre de la receta</h1>
+    <div class="subtitle">
+     Descripción breve de la receta.
+    </div>
+  </header>
+
+  <div class="recipe-details">
+    <div class="detail">
+      <span class="detail-label">MISE EN PLACE</span>
+      <strong>Indicar tiempo</strong>
+    </div>
+    <div class="detail">
+      <span class="detail-label">TIEMPO TOTAL</span>
+      <strong>Indicar tiempo</strong>
+    </div>
+    <div class="detail">
+      <span class="detail-label">DIFICULTAD</span>
+      <strong>Indicar dificultad</strong>
+    </div>
+  </div>
+
+  <div class="people">
+    <strong>Comensales</strong>
+    <div class="controls">
+      <button type="button" id="minus">−</button>
+      <span id="diners">4</span>
+      <button type="button" id="plus">+</button>
+    </div>
+  </div>
+
+<h2>Ingredientes</h2>
+<div class="ingredient"><input type="checkbox"><span>Ingrediente 1</span><span class="qty" data-base="500">500</span><span class="unit">g</span></div>
+<div class="ingredient"><input type="checkbox"><span>Ingrediente 2</span><span class="qty" data-base="250">250</span><span class="unit">g</span></div>
+<div class="ingredient"><input type="checkbox"><span>Ingrediente 3</span><span class="qty" data-base="100">100</span><span class="unit">ml</span></div>
+
+<h2>Elaboración</h2>
+<textarea id="elaboration" placeholder="Escribe aquí la elaboración de la receta..."></textarea>
+<div class="hint">En móvil, al tocar este campo, la página intentará dejarlo visible sobre el teclado.</div>
+</div>
+
+<script>
+(function(){
+var diners=4;
+function round(v){return Math.abs(v-Math.round(v))<.0001?Math.round(v):v<10?Number(v.toFixed(1)):Math.round(v)}
+function update(){
+document.getElementById('diners').textContent=diners;
+document.querySelectorAll('.qty[data-base]').forEach(function(e){
+var v=Number(e.dataset.base)*diners/4;
+e.textContent=round(v);
+});
+}
+document.getElementById('minus').onclick=function(){if(diners>1){diners--;update()}};
+document.getElementById('plus').onclick=function(){if(diners<99){diners++;update()}};
+
+var ta=document.getElementById('elaboration');
+function keepVisible(){
+setTimeout(function(){ta.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});},400);
+}
+ta.addEventListener('focus',keepVisible);
+ta.addEventListener('click',keepVisible);
+update();
+})();
+  // Guardar automáticamente la elaboración
+var campoElaboracion = document.getElementById("elaboration");
+var claveElaboracion = "elaboration-" + window.location.pathname;
+
+campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
+
+campoElaboracion.addEventListener("input", function() {
+  localStorage.setItem(claveElaboracion, campoElaboracion.value);
+});// Guardar automáticamente la elaboración
+document.addEventListener("DOMContentLoaded", function() {
+  var campoElaboracion = document.getElementById("elaboration");
+  var claveElaboracion = "elaboration-" + window.location.pathname;
+
+  if (!campoElaboracion) return;
+
+  campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
+
+  campoElaboracion.addEventListener("input", function() {
+    localStorage.setItem(claveElaboracion, campoElaboracion.value);
+      });
+    });
+  </script>
+</body>
+</html>
