@@ -370,7 +370,7 @@ textarea[readonly] {
 
 <body>
 
-<a href="index.html" class="back-to-recipes">
+<a href="index.html" class="back-to-recipes" id="backToRecipes">
   ← Volver al recetario
 </a>
 
@@ -487,6 +487,7 @@ textarea[readonly] {
   let diners = 4;
   let editing = false;
   let originalHTML = null;
+  let hasUnsavedChanges = false;
 
   const ingredients = document.getElementById("ingredients");
   const elaboration = document.getElementById("elaboration");
@@ -577,34 +578,42 @@ textarea[readonly] {
   // Recoger datos y guardar
 
   function saveRecipe() {
+function saveRecipe(returnToRecipes = false) {
 
-    // Actualizar las cantidades base para cuatro comensales.
-    document.querySelectorAll(".qty").forEach(function(item) {
-      const value = Number(item.textContent.replace(",", "."));
+  // Actualizar las cantidades base para cuatro comensales.
+  document.querySelectorAll(".qty").forEach(function(item) {
+    const value = Number(item.textContent.replace(",", "."));
 
-      if (Number.isFinite(value)) {
-        item.dataset.base = value;
-        item.textContent = value;
-      }
-    });
+    if (Number.isFinite(value)) {
+      item.dataset.base = value;
+      item.textContent = value;
+    }
+  });
 
-    const data = {
-      category: document.querySelector(".recipe-category").textContent,
-      title: document.querySelector("h1").textContent,
-      subtitle: document.querySelector(".subtitle").textContent,
+  const data = {
+    category: document.querySelector(".recipe-category").textContent,
+    title: document.querySelector("h1").textContent,
+    subtitle: document.querySelector(".subtitle").textContent,
 
-      details: Array.from(
-        document.querySelectorAll(".recipe-details .detail strong")
-      ).map(item => item.textContent),
+    details: Array.from(
+      document.querySelectorAll(".recipe-details .detail strong")
+    ).map(item => item.textContent),
 
-      ingredientsHTML: ingredients.innerHTML,
-      elaboration: elaboration.value
-    };
+    ingredientsHTML: ingredients.innerHTML,
+    elaboration: elaboration.value
+  };
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
+  hasUnsavedChanges = false;
+
+  if (returnToRecipes) {
+    window.location.href = "index.html";
+  } else {
     location.reload();
   }
+}
+
 
   // Cancelar edición
 
@@ -640,6 +649,21 @@ textarea[readonly] {
     }
   });
 
+  // Detectar modificaciones
+document.querySelector(".card").addEventListener("input", function() {
+  if (editing) {
+    hasUnsavedChanges = true;
+  }
+});
+
+document.querySelector(".card").addEventListener("click", function(event) {
+  if (editing &&
+      (event.target.classList.contains("delete-ingredient") ||
+       event.target.id === "addIngredient")) {
+    hasUnsavedChanges = true;
+  }
+});
+  
   // Botones
 
   editButton.addEventListener("click", startEditing);
