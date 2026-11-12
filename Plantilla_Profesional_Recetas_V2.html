@@ -577,10 +577,10 @@ textarea[readonly] {
 
   // Recoger datos y guardar
 
-  function saveRecipe() {
+ // Recoger datos y guardar
 function saveRecipe(returnToRecipes = false) {
 
-  // Actualizar las cantidades base para cuatro comensales.
+  // Actualizar cantidades base para cuatro comensales
   document.querySelectorAll(".qty").forEach(function(item) {
     const value = Number(item.textContent.replace(",", "."));
 
@@ -588,6 +588,18 @@ function saveRecipe(returnToRecipes = false) {
       item.dataset.base = value;
       item.textContent = value;
     }
+  });
+
+  // Preparar ingredientes sin controles de edición
+  const ingredientsToSave = ingredients.cloneNode(true);
+
+  ingredientsToSave.querySelectorAll(".delete-ingredient").forEach(function(button) {
+    button.remove();
+  });
+
+  ingredientsToSave.querySelectorAll("[contenteditable]").forEach(function(item) {
+    item.removeAttribute("contenteditable");
+    item.classList.remove("editable");
   });
 
   const data = {
@@ -599,12 +611,11 @@ function saveRecipe(returnToRecipes = false) {
       document.querySelectorAll(".recipe-details .detail strong")
     ).map(item => item.textContent),
 
-    ingredientsHTML: ingredients.innerHTML,
+    ingredientsHTML: ingredientsToSave.innerHTML,
     elaboration: elaboration.value
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
   hasUnsavedChanges = false;
 
   if (returnToRecipes) {
@@ -667,9 +678,32 @@ document.querySelector(".card").addEventListener("click", function(event) {
   // Botones
 
   editButton.addEventListener("click", startEditing);
-  saveButton.addEventListener("click", saveRecipe);
+saveButton.addEventListener("click", function() {
+  saveRecipe(false);
+});
   cancelButton.addEventListener("click", cancelEditing);
   addButton.addEventListener("click", addIngredient);
+    // Volver al recetario controlando cambios pendientes
+
+document.getElementById("backToRecipes").addEventListener("click", function(event) {
+
+  if (!editing || !hasUnsavedChanges) {
+    return;
+  }
+
+  event.preventDefault();
+
+  const guardar = confirm(
+    "Has modificado la receta. ¿Quieres guardar los cambios antes de volver al recetario?\n\nAceptar: guardar.\nCancelar: salir sin guardar."
+  );
+
+  if (guardar) {
+    saveRecipe(true);
+  } else {
+    window.location.href = "index.html";
+  }
+
+});
 
   document.getElementById("minus").addEventListener("click", function() {
     if (!editing && diners > 1) {
