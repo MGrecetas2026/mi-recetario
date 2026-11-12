@@ -287,6 +287,34 @@ a {
     height: 130px;
   }
 }
+  /* Controles de administración */
+.admin-controls,
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.admin-controls button,
+.admin-actions button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #795333;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-actions button:last-child {
+  background: #777;
+}
+
+.admin-controls button:hover,
+.admin-actions button:hover {
+  opacity: 0.85;
+}
 </style>
 </head>
 <body>
@@ -304,7 +332,14 @@ a {
     >
     <span class="hero-label">RECETARIO · COCINA CASERA</span>
   </div>
-
+  
+<div class="admin-controls">
+  <button type="button" id="editRecipe">✏️ Editar receta</button>
+</div>
+  <div class="admin-actions" id="adminActions" hidden>
+  <button type="button" id="saveRecipe">💾 Guardar cambios</button>
+  <button type="button" id="cancelEdit">Cancelar</button>
+</div>
   <header class="recipe-header">
     <p class="recipe-category">CATEGORÍA · TÉCNICA DE COCINA</p>
     <h1>Nombre de la receta</h1>
@@ -348,48 +383,59 @@ a {
 </div>
 
 <script>
-(function(){
-var diners=4;
-function round(v){return Math.abs(v-Math.round(v))<.0001?Math.round(v):v<10?Number(v.toFixed(1)):Math.round(v)}
-function update(){
-document.getElementById('diners').textContent=diners;
-document.querySelectorAll('.qty[data-base]').forEach(function(e){
-var v=Number(e.dataset.base)*diners/4;
-e.textContent=round(v);
-});
-}
-document.getElementById('minus').onclick=function(){if(diners>1){diners--;update()}};
-document.getElementById('plus').onclick=function(){if(diners<99){diners++;update()}};
+(function() {
 
-var ta=document.getElementById('elaboration');
-function keepVisible(){
-setTimeout(function(){ta.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});},400);
-}
-ta.addEventListener('focus',keepVisible);
-ta.addEventListener('click',keepVisible);
-update();
-})();
-  // Guardar automáticamente la elaboración
-var campoElaboracion = document.getElementById("elaboration");
-var claveElaboracion = "elaboration-" + window.location.pathname;
+  var diners = 4;
 
-campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
+  function round(v) {
+    return Math.abs(v - Math.round(v)) < 0.0001
+      ? Math.round(v)
+      : v < 10 ? Number(v.toFixed(1)) : Math.round(v);
+  }
 
-campoElaboracion.addEventListener("input", function() {
-  localStorage.setItem(claveElaboracion, campoElaboracion.value);
-});// Guardar automáticamente la elaboración
-document.addEventListener("DOMContentLoaded", function() {
-  var campoElaboracion = document.getElementById("elaboration");
-  var claveElaboracion = "elaboration-" + window.location.pathname;
+  // Cálculo de cantidades
+  function update() {
+    document.getElementById('diners').textContent = diners;
 
-  if (!campoElaboracion) return;
-
-  campoElaboracion.value = localStorage.getItem(claveElaboracion) || "";
-
-  campoElaboracion.addEventListener("input", function() {
-    localStorage.setItem(claveElaboracion, campoElaboracion.value);
-      });
+    document.querySelectorAll('.qty[data-base]').forEach(function(e) {
+      var v = Number(e.dataset.base) * diners / 4;
+      e.textContent = round(v);
     });
+  }
+
+  // Controles de comensales
+  document.getElementById('minus').onclick = function() {
+    if (diners > 1) {
+      diners--;
+      update();
+    }
+  };
+
+  document.getElementById('plus').onclick = function() {
+    if (diners < 99) {
+      diners++;
+      update();
+    }
+  };
+
+  // Desplazamiento del campo de elaboración en móviles
+  var ta = document.getElementById('elaboration');
+
+  function keepVisible() {
+    setTimeout(function() {
+      ta.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }, 400);
+  }
+
+  ta.addEventListener('focus', keepVisible);
+  ta.addEventListener('click', keepVisible);
+
+  update();
+})();
   </script>
 </body>
 </html>
