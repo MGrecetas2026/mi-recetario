@@ -1,39 +1,11 @@
-<!doctype html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Plantilla profesional de recetas</title>
-  <style>
-  /* Botón flotante de retorno al recetario */
-.back-to-recipes {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1000;
-  display: inline-block;
-  padding: 12px 18px;
-  background: #795333;
-  color: white;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: bold;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.20);
-  transition: background 0.2s ease;
-}
 
-.back-to-recipes:hover {
-  background: #5e3e25;
-}
-
-@media (max-width: 600px) {
-  .back-to-recipes {
-    right: 12px;
-    bottom: 12px;
-    padding: 11px 15px;
-    font-size: 14px;
-  }
-}
 <style>
 * {
   box-sizing: border-box;
@@ -66,7 +38,39 @@ body {
   background: var(--papel);
   border: 1px solid var(--borde);
   border-radius: 16px;
-  box-shadow: 0 8px 28px rgba(50, 38, 25, 0.07);
+  box-shadow: 0 8px 28px rgba(50,38,25,0.07);
+}
+
+/* Fotografía */
+
+.recipe-hero {
+  margin-bottom: 18px;
+}
+
+.recipe-hero img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: left center;
+  border-radius: 12px;
+}
+
+.hero-label {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--secundario);
+  letter-spacing: 0.5px;
+}
+
+/* Cabecera */
+
+.recipe-category {
+  color: var(--acento-oscuro);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 h1 {
@@ -91,6 +95,28 @@ h2 {
   font-size: 15px;
 }
 
+/* Datos de la receta */
+
+.recipe-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 20px 0;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.detail-label {
+  color: var(--secundario);
+  font-size: 11px;
+}
+
+/* Comensales */
+
 .people {
   display: flex;
   align-items: center;
@@ -109,64 +135,73 @@ h2 {
 }
 
 button {
-  width: 44px;
-  height: 44px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--acento-oscuro);
   color: white;
-  font-size: 24px;
   cursor: pointer;
+  font-family: Arial, sans-serif;
+}
+
+.controls button {
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
 }
 
 button:hover {
-  background: var(--acento);
+  opacity: 0.85;
 }
 
 #diners {
   min-width: 30px;
   text-align: center;
-  font-size: 21px;
   font-weight: bold;
 }
 
+/* Ingredientes */
+
 .ingredient {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr) auto auto;
+  grid-template-columns: 28px minmax(0,1fr) auto auto 35px;
   gap: 10px;
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #eee9e2;
 }
 
-.ingredient input {
+.ingredient input[type="checkbox"] {
   width: 20px;
   height: 20px;
   accent-color: var(--acento-oscuro);
-  cursor: pointer;
 }
 
 .ingredient:has(input:checked) {
   color: #89847b;
 }
 
-.ingredient:has(input:checked) > :nth-child(2) {
+.ingredient:has(input:checked) .ingredient-name {
   text-decoration: line-through;
 }
 
+.ingredient-name {
+  min-width: 0;
+}
+
 .qty {
-  min-width: 48px;
+  min-width: 55px;
   color: var(--acento-oscuro);
   font-weight: bold;
   text-align: right;
 }
 
 .unit {
-  min-width: 90px;
+  min-width: 35px;
   color: var(--secundario);
   white-space: nowrap;
-  font-size: 14px;
 }
+
+/* Elaboración */
 
 textarea {
   width: 100%;
@@ -181,25 +216,99 @@ textarea {
   line-height: 1.75;
 }
 
+textarea[readonly] {
+  background: #f8f5f0;
+}
+
+/* Edición */
+
+.admin-controls,
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.admin-controls button,
+.admin-actions button,
+.add-ingredient {
+  display: inline-block;
+  width: auto;
+  min-width: 145px;
+  height: 42px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.admin-actions button:last-child {
+  background: #777;
+}
+
+.add-ingredient {
+  margin-top: 15px;
+  background: #657c54;
+}
+
+.delete-ingredient {
+  width: 30px;
+  height: 30px;
+  background: #a94442;
+  font-size: 17px;
+}
+
+.editable {
+  outline: 1px dashed var(--acento);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Retorno */
+
+.back-to-recipes {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  display: inline-block;
+  padding: 12px 18px;
+  background: var(--acento-oscuro);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.20);
+}
+
+/* Ayuda */
+
 .hint {
   margin-top: 9px;
   color: var(--secundario);
   font-size: 13px;
 }
 
-a {
-  color: var(--acento-oscuro);
-}
+/* Móvil */
 
 @media (max-width: 600px) {
   body {
-    padding: 12px 8px;
-    padding-bottom: 35vh;
+    padding: 12px 8px 35vh;
   }
 
   .card {
     padding: 18px 15px;
     border-radius: 12px;
+  }
+
+  .recipe-hero img {
+    height: 130px;
   }
 
   h1 {
@@ -211,171 +320,112 @@ a {
   }
 
   .ingredient {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) auto auto;
-  gap: 5px;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee9e2;
-}
+    grid-template-columns: 22px minmax(0,1fr) auto auto 30px;
+    gap: 5px;
+    padding: 10px 0;
+  }
 
-  .unit {
-    grid-column: 2;
-    grid-row: 2;
-    min-width: 0;
-    margin-top: -8px;
+  .qty {
+    min-width: 35px;
     font-size: 13px;
   }
 
- .qty {
-  min-width: 0;
-  color: var(--acento-oscuro);
-  font-weight: bold;
-  text-align: right;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  .unit {
+    font-size: 13px;
+  }
+
+  .back-to-recipes {
+    right: 12px;
+    bottom: 12px;
+    padding: 11px 15px;
+    font-size: 14px;
+  }
 }
+
+/* Impresión */
 
 @media print {
   body {
     padding: 0;
     background: white;
-    color: black;
   }
 
   .card {
     max-width: none;
     padding: 0;
     border: 0;
-    border-radius: 0;
     box-shadow: none;
   }
 
   button,
-  .hint {
+  .admin-controls,
+  .admin-actions,
+  .hint,
+  .back-to-recipes {
     display: none !important;
   }
-
-  textarea {
-    min-height: 0;
-    resize: none;
-    padding: 0;
-    border: 0;
-    background: white;
-  }
-
-  h2 {
-    break-after: avoid;
-  }
-
-  .ingredient {
-    break-inside: avoid;
-  }
-}
-  /* Tamaño de la fotografía de cabecera */
-.recipe-hero img {
-  display: block;
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-/* Fotografía más compacta en móviles */
-@media (max-width: 600px) {
-  .recipe-hero img {
-    height: 130px;
-  }
-}
- .admin-controls button,
-.admin-actions button {
-  display: inline-block;
-  width: auto;
-  min-width: 150px;
-  height: 42px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #795333;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.admin-controls button,
-.admin-actions button {
-  padding: 11px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #795333;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-    width: auto;
-  height: auto;
-  font-size: 14px;
-}
-
-.admin-actions button:last-child {
-  background: #777;
-}
-
-.admin-controls button:hover,
-.admin-actions button:hover {
-  opacity: 0.85;
 }
 </style>
 </head>
+
 <body>
- <div style="max-width:700px; margin:0 auto 20px; padding:0 12px;">
-  <a href="index.html" class="back-to-recipes">
+
+<a href="index.html" class="back-to-recipes">
   ← Volver al recetario
-  </a>
-</div>
+</a>
+
 <div class="card">
 
   <div class="recipe-hero">
     <img
       src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=85"
-      alt="Plato de comida presentado para servir"
-    >
+      alt="Plato de comida presentado para servir">
     <span class="hero-label">RECETARIO · COCINA CASERA</span>
   </div>
-  
-<div class="admin-controls">
-  <button type="button" id="editRecipe">✏️ Editar receta</button>
-</div>
+
+  <div class="admin-controls">
+    <button type="button" id="editRecipe">✏️ Editar receta</button>
+  </div>
+
   <div class="admin-actions" id="adminActions" hidden>
-  <button type="button" id="saveRecipe">💾 Guardar cambios</button>
-  <button type="button" id="cancelEdit">Cancelar</button>
-</div>
+    <button type="button" id="saveRecipe">💾 Guardar cambios</button>
+    <button type="button" id="cancelEdit">Cancelar</button>
+  </div>
+
   <header class="recipe-header">
+
     <p class="recipe-category">CATEGORÍA · TÉCNICA DE COCINA</p>
+
     <h1>Nombre de la receta</h1>
+
     <div class="subtitle">
-     Descripción breve de la receta.
+      Descripción breve de la receta.
     </div>
+
   </header>
 
   <div class="recipe-details">
+
     <div class="detail">
       <span class="detail-label">MISE EN PLACE</span>
       <strong>Indicar tiempo</strong>
     </div>
+
     <div class="detail">
       <span class="detail-label">TIEMPO TOTAL</span>
       <strong>Indicar tiempo</strong>
     </div>
+
     <div class="detail">
       <span class="detail-label">DIFICULTAD</span>
       <strong>Indicar dificultad</strong>
     </div>
+
   </div>
 
   <div class="people">
     <strong>Comensales</strong>
+
     <div class="controls">
       <button type="button" id="minus">−</button>
       <span id="diners">4</span>
@@ -383,70 +433,254 @@ a {
     </div>
   </div>
 
-<h2>Ingredientes</h2>
-<div class="ingredient"><input type="checkbox"><span>Ingrediente 1</span><span class="qty" data-base="500">500</span><span class="unit">g</span></div>
-<div class="ingredient"><input type="checkbox"><span>Ingrediente 2</span><span class="qty" data-base="250">250</span><span class="unit">g</span></div>
-<div class="ingredient"><input type="checkbox"><span>Ingrediente 3</span><span class="qty" data-base="100">100</span><span class="unit">ml</span></div>
+  <h2>Ingredientes</h2>
 
-<h2>Elaboración</h2>
-<textarea id="elaboration" placeholder="Escribe aquí la elaboración de la receta..."></textarea>
-<div class="hint">En móvil, al tocar este campo, la página intentará dejarlo visible sobre el teclado.</div>
+  <div id="ingredients">
+
+    <div class="ingredient">
+      <input type="checkbox">
+      <span class="ingredient-name">Ingrediente 1</span>
+      <span class="qty" data-base="500">500</span>
+      <span class="unit">g</span>
+      <button class="delete-ingredient" type="button" hidden>×</button>
+    </div>
+
+    <div class="ingredient">
+      <input type="checkbox">
+      <span class="ingredient-name">Ingrediente 2</span>
+      <span class="qty" data-base="250">250</span>
+      <span class="unit">g</span>
+      <button class="delete-ingredient" type="button" hidden>×</button>
+    </div>
+
+    <div class="ingredient">
+      <input type="checkbox">
+      <span class="ingredient-name">Ingrediente 3</span>
+      <span class="qty" data-base="100">100</span>
+      <span class="unit">ml</span>
+      <button class="delete-ingredient" type="button" hidden>×</button>
+    </div>
+
+  </div>
+
+  <button type="button" class="add-ingredient" id="addIngredient" hidden>
+    + Añadir ingrediente
+  </button>
+
+  <h2>Elaboración</h2>
+
+  <textarea id="elaboration"
+    placeholder="Escribe aquí la elaboración de la receta..."
+    readonly></textarea>
+
+  <div class="hint">
+    Para modificar la receta, pulsa «Editar receta».
+  </div>
+
 </div>
 
 <script>
 (function() {
 
-  var diners = 4;
+  const STORAGE_KEY = "receta-v2-" + location.pathname;
 
-  function round(v) {
-    return Math.abs(v - Math.round(v)) < 0.0001
-      ? Math.round(v)
-      : v < 10 ? Number(v.toFixed(1)) : Math.round(v);
+  let diners = 4;
+  let editing = false;
+  let originalHTML = null;
+
+  const ingredients = document.getElementById("ingredients");
+  const elaboration = document.getElementById("elaboration");
+
+  const editButton = document.getElementById("editRecipe");
+  const saveButton = document.getElementById("saveRecipe");
+  const cancelButton = document.getElementById("cancelEdit");
+  const addButton = document.getElementById("addIngredient");
+  const adminActions = document.getElementById("adminActions");
+
+  function round(value) {
+    return Math.abs(value - Math.round(value)) < 0.0001
+      ? Math.round(value)
+      : value < 10
+        ? Number(value.toFixed(1))
+        : Math.round(value);
   }
 
-  // Cálculo de cantidades
-  function update() {
-    document.getElementById('diners').textContent = diners;
+  // Actualizar cantidades según comensales
 
-    document.querySelectorAll('.qty[data-base]').forEach(function(e) {
-      var v = Number(e.dataset.base) * diners / 4;
-      e.textContent = round(v);
+  function update() {
+    document.getElementById("diners").textContent = diners;
+
+    document.querySelectorAll(".qty[data-base]").forEach(function(item) {
+      const value = Number(item.dataset.base) * diners / 4;
+      item.textContent = round(value);
     });
   }
 
-  // Controles de comensales
-  document.getElementById('minus').onclick = function() {
-    if (diners > 1) {
+  // Cargar receta guardada
+
+  function loadRecipe() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+
+      document.querySelector(".recipe-category").textContent = data.category;
+      document.querySelector("h1").textContent = data.title;
+      document.querySelector(".subtitle").textContent = data.subtitle;
+
+      document.querySelectorAll(".recipe-details .detail strong")
+        .forEach(function(item, index) {
+          item.textContent = data.details[index] || "";
+        });
+
+      ingredients.innerHTML = data.ingredientsHTML;
+      elaboration.value = data.elaboration || "";
+
+    } catch (error) {
+      console.error("No se pudo cargar la receta guardada.", error);
+    }
+  }
+
+  // Activar edición
+
+  function startEditing() {
+    if (editing) return;
+
+    originalHTML = document.querySelector(".card").innerHTML;
+
+    editing = true;
+
+    // Trabajamos siempre con cantidades para cuatro comensales.
+    diners = 4;
+    update();
+
+    document.querySelectorAll(
+      ".recipe-category, h1, .subtitle, .recipe-details strong, .ingredient-name, .unit, .qty"
+    ).forEach(function(item) {
+      item.contentEditable = "true";
+      item.classList.add("editable");
+    });
+
+    elaboration.readOnly = false;
+
+    document.querySelectorAll(".delete-ingredient").forEach(function(button) {
+      button.hidden = false;
+    });
+
+    editButton.hidden = true;
+    adminActions.hidden = false;
+    addButton.hidden = false;
+  }
+
+  // Recoger datos y guardar
+
+  function saveRecipe() {
+
+    // Actualizar las cantidades base para cuatro comensales.
+    document.querySelectorAll(".qty").forEach(function(item) {
+      const value = Number(item.textContent.replace(",", "."));
+
+      if (Number.isFinite(value)) {
+        item.dataset.base = value;
+        item.textContent = value;
+      }
+    });
+
+    const data = {
+      category: document.querySelector(".recipe-category").textContent,
+      title: document.querySelector("h1").textContent,
+      subtitle: document.querySelector(".subtitle").textContent,
+
+      details: Array.from(
+        document.querySelectorAll(".recipe-details .detail strong")
+      ).map(item => item.textContent),
+
+      ingredientsHTML: ingredients.innerHTML,
+      elaboration: elaboration.value
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+    location.reload();
+  }
+
+  // Cancelar edición
+
+  function cancelEditing() {
+    if (confirm("¿Descartar todos los cambios realizados?")) {
+      location.reload();
+    }
+  }
+
+  // Añadir ingrediente
+
+  function addIngredient() {
+
+    const row = document.createElement("div");
+    row.className = "ingredient";
+
+    row.innerHTML = `
+      <input type="checkbox">
+      <span class="ingredient-name editable" contenteditable="true">Nuevo ingrediente</span>
+      <span class="qty editable" data-base="0" contenteditable="true">0</span>
+      <span class="unit editable" contenteditable="true">g</span>
+      <button class="delete-ingredient" type="button">×</button>
+    `;
+
+    ingredients.appendChild(row);
+  }
+
+  // Eliminar ingrediente
+
+  ingredients.addEventListener("click", function(event) {
+    if (event.target.classList.contains("delete-ingredient")) {
+      event.target.closest(".ingredient").remove();
+    }
+  });
+
+  // Botones
+
+  editButton.addEventListener("click", startEditing);
+  saveButton.addEventListener("click", saveRecipe);
+  cancelButton.addEventListener("click", cancelEditing);
+  addButton.addEventListener("click", addIngredient);
+
+  document.getElementById("minus").addEventListener("click", function() {
+    if (!editing && diners > 1) {
       diners--;
       update();
     }
-  };
+  });
 
-  document.getElementById('plus').onclick = function() {
-    if (diners < 99) {
+  document.getElementById("plus").addEventListener("click", function() {
+    if (!editing && diners < 99) {
       diners++;
       update();
     }
-  };
+  });
 
-  // Desplazamiento del campo de elaboración en móviles
-  var ta = document.getElementById('elaboration');
+  // Visibilidad del campo de elaboración en móviles
 
   function keepVisible() {
     setTimeout(function() {
-      ta.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest'
+      elaboration.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
       });
     }, 400);
   }
 
-  ta.addEventListener('focus', keepVisible);
-  ta.addEventListener('click', keepVisible);
+  elaboration.addEventListener("focus", keepVisible);
 
+  // Inicio
+
+  loadRecipe();
   update();
+
 })();
-  </script>
+</script>
+
 </body>
 </html>
